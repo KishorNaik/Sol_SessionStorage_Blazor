@@ -1,0 +1,44 @@
+﻿@page "/"
+
+@using Blazored.SessionStorage
+
+@inject ISessionStorageService _localSessionStorage
+
+<h1>Hello, world!</h1>
+
+<h3>@Message</h3>
+
+Welcome to your new app.
+
+@code{
+
+    private string Message { get; set; }
+
+    public async Task SetItem()
+    {
+        string message = "Hello Blazor";
+
+        await _localSessionStorage.SetItemAsync("obj", message);
+
+    }
+
+    public async Task GetItem()
+    {
+        Message = await _localSessionStorage.GetItemAsync<String>("obj");
+        await _localSessionStorage.ClearAsync();
+    }
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <button @onclick="SetItem" class="btn btn-danger">Set Storage</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button @onclick="GetItem" class="btn btn-secondary">Get Storage</button>
+        </div>
+    </div>
+</div>
